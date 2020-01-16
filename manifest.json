@@ -1,0 +1,15 @@
+{
+    "manifest_version": 2,
+    "name": "Amazon Web Search",
+    "version": "1.0",
+  
+    "description": "Hot keys for searching Amazon Web Services",
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*.console.aws.amazon.com/*"],
+        "js": ["amazon-web-search.js"]
+      }
+    ]
+  
+  }
