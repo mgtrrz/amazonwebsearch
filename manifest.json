@@ -10,6 +10,18 @@
         "matches": ["*://*.console.aws.amazon.com/*"],
         "js": ["amazon-web-search.js"]
       }
-    ]
+    ],
+    
+    "options_ui": {
+        "page": "options.html"
+    },
+    
+    "permissions": ["storage"],
+    
+    "applications": {
+        "gecko": {
+          "id": "amazonwebsearch@mk9.me"
+        }
+    }
   
   }
