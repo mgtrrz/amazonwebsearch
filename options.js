@@ -12,6 +12,10 @@ function saveOptions(e) {
   browser.storage.sync.set({
     keyCode: document.querySelector("#keyCode").value
   });
+
+  var notif = document.getElementById("notification");
+  notif.innerHTML = "Saved!";
+  notif.style.display = "block";
 }
   
 function restoreOptions() {

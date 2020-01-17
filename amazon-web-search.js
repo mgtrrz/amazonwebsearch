@@ -2,7 +2,7 @@ let servicesId = "nav-servicesMenu";
 let inputId = "awsc-services-search-autocomplete";
 
 // Defaults
-var modifier = "shift";
+var modifier = "meta";
 var userKey = 221; // "]"
 
 function onError(error) {
@@ -46,19 +46,17 @@ function getModifierKeyPressed(e) {
 }
 
 document.onkeydown=function(e){
-
-    console.log("Current modifier: " + modifier);
-    console.log("Modifier key pressed: " + getModifierKeyPressed(e));
-    console.log("Current Key: " + userKey);
-    console.log("Curret Key pressed: " + e.which);
-    console.log("---");
-
     // Getting user definition for modifier
     var gettingUserModifier = browser.storage.sync.get("modifier");
     gettingUserModifier.then(onGotModifier, onError);
 
     var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
     gettingUserKeyCode.then( onGotKeyCode, onError);
+
+
+    console.log("Currently set Modifier: " + modifier);
+    console.log("Currently set key: " + userKey);
+    console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
 
     if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
@@ -67,17 +65,17 @@ document.onkeydown=function(e){
 
         return false;
     }
-
+    
+    // shift + enter
+    // to open the first element in the search in a new tab
     if ( e.shiftKey && e.which == 13 ) {
-        // Getting the first 
         var firstElement = document.getElementById("ui-id-1").childNodes[0].childNodes[0];
         var firstLink = firstElement.href;
         console.log(firstLink)
         window.open(firstLink, '_blank');
         window.focus();
         // Prevent the Amazon script from loading the page within the same tab
-        e.preventDefault();
-        //window.stop();
+        window.stop();
     }
 }
 

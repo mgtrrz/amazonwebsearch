@@ -7,19 +7,31 @@
   </head>
 
   <body>
-
+    <div class="form-style-8">
     <form>
-        <label>Modifier Key <select id="modifier">
+      <h2>Amazon Web Search</h2>
+      <p>
+        <label>Modifier Key</label>
+        <select id="modifier">
             <option value="meta">Meta (Cmd/Windows Key)</option>
             <option value="alt">Alt</option>
             <option value="control">Control</option>
             <option value="shift">Shift</option>
-        </select></label>
-        <label><input id="key" tabindex="0" maxlength="0" placeholder="Click to record key press"></input></label>
-        <input id="keyCode" name="keyCode" hidden>
-        <button type="submit">Save</button>
+        </select>
+      </p>
+      <p>
+        <label>Regular Key</label>
+        <input id="key" tabindex="0" maxlength="0" placeholder="Click to record key press"></input>
+        <input id="keyCode" name="keyCode" hidden />
+      </p>
+      <p>
+        <input type="submit" id="submit" value="Save Settings" />
+      </p>
+      <p>
+        <div id="notification" style="display: none;"></div>
+      </p>
     </form>
-
+  </div>
     <script src="options.js"></script>
 
   </body>
