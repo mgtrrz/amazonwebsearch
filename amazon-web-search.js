@@ -53,10 +53,9 @@ document.onkeydown=function(e){
     var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
     gettingUserKeyCode.then( onGotKeyCode, onError);
 
-
-    console.log("Currently set Modifier: " + modifier);
-    console.log("Currently set key: " + userKey);
-    console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
+    // console.log("Currently set Modifier: " + modifier);
+    // console.log("Currently set key: " + userKey);
+    // console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
 
     if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
@@ -71,7 +70,6 @@ document.onkeydown=function(e){
     if ( e.shiftKey && e.which == 13 ) {
         var firstElement = document.getElementById("ui-id-1").childNodes[0].childNodes[0];
         var firstLink = firstElement.href;
-        console.log(firstLink)
         window.open(firstLink, '_blank');
         window.focus();
         // Prevent the Amazon script from loading the page within the same tab

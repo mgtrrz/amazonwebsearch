@@ -1,7 +1,7 @@
 function saveOptions(e) {
   e.preventDefault();
 
-  console.log("KeyCode value we saved: " + document.querySelector("#keyCode").value)
+  console.log("KeyCode value saved: " + document.querySelector("#keyCode").value)
 
   browser.storage.sync.set({
     modifier: document.querySelector("#modifier").value
