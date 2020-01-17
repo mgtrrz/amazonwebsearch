@@ -44,7 +44,7 @@ function restoreOptions() {
   getKey.then(setCurrentKeyChoice, onError);
 
   var getKeyCode = browser.storage.sync.get("keyCode");
-  getKey.then(setCurrentKeyCodeChoice, onError);
+  getKeyCode.then(setCurrentKeyCodeChoice, onError);
 }
 
 document.addEventListener("DOMContentLoaded", restoreOptions);
@@ -55,6 +55,6 @@ var keyForm = document.getElementById("key");
 keyForm.onkeydown = function(e) {
     e = e || window.event;
     keyForm.value = e.key;
-    document.getElementById("keyCode").value = e.keyCode;
+    document.querySelector("#keyCode").value = e.keyCode;
     console.log("keydown: " + e.keyCode);
 };
