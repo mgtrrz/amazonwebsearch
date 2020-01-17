@@ -3,19 +3,20 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="options.css">
   </head>
 
   <body>
 
     <form>
         <label>Modifier Key <select id="modifier">
-            <option value="meta">Meta (Cmd/Windows)</option>
+            <option value="meta">Meta (Cmd/Windows Key)</option>
             <option value="alt">Alt</option>
             <option value="control">Control</option>
             <option value="shift">Shift</option>
-            <option value="caps">Caps Lock</option>
         </select></label>
-        <label>Key <input type="text" id="key" ></label>
+        <label><input id="key" tabindex="0" maxlength="0" placeholder="Click to record key press"></input></label>
+        <input id="keyCode" name="keyCode" hidden>
         <button type="submit">Save</button>
     </form>
 

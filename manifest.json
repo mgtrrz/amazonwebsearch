@@ -11,6 +11,11 @@
         "js": ["amazon-web-search.js"]
       }
     ],
+
+    "icons": {
+      "48": "icons/ico_48x48.png",
+      "96": "icons/ico_96x96.png"
+    },
     
     "options_ui": {
         "page": "options.html"

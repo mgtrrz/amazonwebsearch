@@ -5,15 +5,11 @@ let inputId = "awsc-services-search-autocomplete";
 var modifier = "shift";
 var userKey = 221; // "]"
 
-console.log("Using:");
-console.log(modifier);
-console.log(userKey);
-
 function onError(error) {
     console.log(`Error: ${error}`);
 }
 
-function isSearchMenuOpen() {
+function searchMenuIsOpen() {
     if ( document.getElementById("servicesMenuContent").style.display === "block" ) {
         return true;
     } 
@@ -27,9 +23,9 @@ function onGotModifier(item) {
     }
 }
 
-function onGotKey(item) {
-    if (item.key) {
-        userKey = item.key.charCodeAt(0);
+function  onGotKeyCode(item) {
+    if (item.keyCode) {
+        userKey = item.keyCode;
     }
 }
 
@@ -51,14 +47,20 @@ function getModifierKeyPressed(e) {
 
 document.onkeydown=function(e){
 
+    console.log("Current modifier: " + modifier);
+    console.log("Modifier key pressed: " + getModifierKeyPressed(e));
+    console.log("Current Key: " + userKey);
+    console.log("Curret Key pressed: " + e.which);
+    console.log("---");
+
     // Getting user definition for modifier
     var gettingUserModifier = browser.storage.sync.get("modifier");
     gettingUserModifier.then(onGotModifier, onError);
 
-    var gettingUserKey = browser.storage.sync.get("key");
-    gettingUserKey.then(onGotKey, onError);
+    var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
+    gettingUserKeyCode.then( onGotKeyCode, onError);
 
-    if ( e.shiftKey && e.which == 221 ) {
+    if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
         document.getElementById(servicesId).click()
         document.getElementById(inputId).focus();
@@ -74,13 +76,14 @@ document.onkeydown=function(e){
         window.open(firstLink, '_blank');
         window.focus();
         // Prevent the Amazon script from loading the page within the same tab
-        window.stop();
+        e.preventDefault();
+        //window.stop();
     }
 }
 
 document.onkeyup=function(e){
 
-    if (e.key === "Escape" && isSearchMenuOpen()) {
+    if (e.key === "Escape" && searchMenuIsOpen()) {
         // Simulate a click event to close the services menu
         document.getElementById(servicesId).click()
 
