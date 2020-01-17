@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="options.css">
+  </head>
+
+  <body>
+    <div class="form-style-8">
+      <div id="log">
+        
+      </div>
+    <form>
+      <h2>Amazon Web Search</h2>
+      <p>
+        <label>Modifier Key</label>
+        <select id="modifier">
+            <option value="meta">Meta (Cmd/Windows Key)</option>
+            <option value="alt">Alt</option>
+            <option value="control">Control</option>
+            <option value="shift">Shift</option>
+        </select>
+      </p>
+      <p>
+        <label>Regular Key</label>
+        <input id="key" tabindex="0" maxlength="0" placeholder="Click to record key press"></input>
+        <input id="keyCode" name="keyCode" hidden />
+      </p>
+      <p>
+        <input type="submit" id="submit" value="Save Settings" />
+      </p>
+      <p>
+        <div id="notification" style="display: none;"></div>
+      </p>
+    </form>
+  </div>
+    <script src="options.js"></script>
+
+  </body>
+
+</html>

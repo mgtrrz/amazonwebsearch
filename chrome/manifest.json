@@ -1,0 +1,35 @@
+{
+    "manifest_version": 2,
+    "name": "Amazon Web Search",
+    "version": "0.1.0",
+  
+    "description": "Hotkey for opening AWS search.",
+  
+    "content_scripts": [
+      {
+        "matches": ["*://*.console.aws.amazon.com/*"],
+        "js": ["amazon-web-search.js"]
+      }
+    ],
+
+    "icons": {
+      "48": "icons/ico_48x48.png",
+      "96": "icons/ico_96x96.png"
+    },
+
+    "browser_action": {
+      "browser_style": true,
+      "default_popup": "options.html",
+      "default_icon": {
+        "16": "icons/ico_16x16.png",
+        "32": "icons/ico_32x32.png"
+      }
+    },
+    
+    "options_ui": {
+        "page": "options.html"
+    },
+    
+    "permissions": ["storage"]
+    
+  }

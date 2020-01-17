@@ -47,16 +47,24 @@ function getModifierKeyPressed(e) {
 
 document.onkeydown=function(e){
     // Getting user definition for modifier
-    var gettingUserModifier = browser.storage.sync.get("modifier");
-    gettingUserModifier.then(onGotModifier, onError);
+    // var gettingUserModifier = browser.storage.sync.get("modifier");
+    // gettingUserModifier.then(onGotModifier, onError);
 
-    var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
-    gettingUserKeyCode.then( onGotKeyCode, onError);
+    chrome.storage.sync.get('modifier', function(data) {
+        onGotModifier(data.modifier);
+    });
+
+    // var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
+    // gettingUserKeyCode.then( onGotKeyCode, onError);
+
+    chrome.storage.sync.get('keyCode', function(data) {
+        onGotKeyCode(data.keyCode);
+    });
 
 
-    // console.log("Currently set Modifier: " + modifier);
-    // console.log("Currently set key: " + userKey);
-    // console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
+    console.log("Currently set Modifier: " + modifier);
+    console.log("Currently set key: " + userKey);
+    console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
 
     if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
