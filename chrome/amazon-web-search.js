@@ -5,9 +5,6 @@ let inputId = "awsc-services-search-autocomplete";
 var modifier = "meta";
 var userKey = 221; // "]"
 
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
 
 function searchMenuIsOpen() {
     if ( document.getElementById("servicesMenuContent").style.display === "block" ) {
@@ -17,17 +14,6 @@ function searchMenuIsOpen() {
     return false;
 }
 
-function onGotModifier(item) {
-    if (item.modifier) {
-        modifier = item.modifier;
-    }
-}
-
-function  onGotKeyCode(item) {
-    if (item.keyCode) {
-        userKey = item.keyCode;
-    }
-}
 
 function getModifierKeyPressed(e) {
     if ( e.metaKey === true ) {
@@ -45,21 +31,22 @@ function getModifierKeyPressed(e) {
     return "";
 }
 
+
+chrome.storage.local.get("modifier", function(data) {
+    console.log(data);
+    if (data.modifier) {
+        modifier = data.modifier;
+    }
+});
+
+chrome.storage.local.get("keyCode", function(data) {
+    console.log(data);
+    if (data.keyCode) {
+        userKey = data.keyCode;
+    }
+});
+
 document.onkeydown=function(e){
-    // Getting user definition for modifier
-    // var gettingUserModifier = browser.storage.sync.get("modifier");
-    // gettingUserModifier.then(onGotModifier, onError);
-
-    chrome.storage.sync.get('modifier', function(data) {
-        onGotModifier(data.modifier);
-    });
-
-    // var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
-    // gettingUserKeyCode.then( onGotKeyCode, onError);
-
-    chrome.storage.sync.get('keyCode', function(data) {
-        onGotKeyCode(data.keyCode);
-    });
 
 
     console.log("Currently set Modifier: " + modifier);

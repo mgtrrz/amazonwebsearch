@@ -3,55 +3,42 @@ function saveOptions(e) {
 
   console.log("KeyCode value we saved: " + document.querySelector("#keyCode").value)
 
-  browser.storage.sync.set({
-    modifier: document.querySelector("#modifier").value
+  chrome.storage.local.set({"modifier": document.querySelector("#modifier").value});
+
+  chrome.storage.local.set({"key": document.querySelector("#key").value});
+
+  console.log("about to call set keycode");
+  chrome.storage.local.set({"keyCode": document.querySelector("#keyCode").value}, function(d) {
+    console.log("after inner called");
+    var test;
+    chrome.storage.sync.get("keyCode", function(data) {
+      test = data;
+      //init(); // All your code is contained here, or executes later that this
+      console.log(test);
+    });
   });
-  browser.storage.sync.set({
-    key: document.querySelector("#key").value
-  });
-  browser.storage.sync.set({
-    keyCode: document.querySelector("#keyCode").value
-  });
+  console.log("after set keycode");
 
   var notif = document.getElementById("notification");
   notif.innerHTML = "Saved!";
   notif.style.display = "block";
 }
   
-function restoreOptions() {
-
-  function setCurrentModifierChoice(result) {
-    document.querySelector("#modifier").value = result.modifier || "meta";
-  }
-
-  function setCurrentKeyChoice(result) {
-    document.querySelector("#key").value = result.key || "]";
-  }
-
-  function setCurrentKeyCodeChoice(result) {
-    document.querySelector("#keyCode").value = result.keyCode || "219";
-  }
-
-
-  function onError(error) {
-    console.log(`Error: ${error}`);
-  }
-
-  // var getModifier = browser.storage.sync.get("modifier");
-  // getModifier.then(setCurrentModifierChoice, onError);
-
-  chrome.storage.sync.get('keyCode', function(data) {
-      onGotKeyCode(data.keyCode);
-  });
-
-  var getKey = browser.storage.sync.get("key");
-  getKey.then(setCurrentKeyChoice, onError);
-
-  var getKeyCode = browser.storage.sync.get("keyCode");
-  getKeyCode.then(setCurrentKeyCodeChoice, onError);
+function restoreOptions(result) {
+  console.log(result)
+  document.querySelector("#modifier").value = result.modifier || "meta";
+  document.querySelector("#key").value = result.key || "]";
+  document.querySelector("#keyCode").value = result.keyCode || "219";
 }
 
-document.addEventListener("DOMContentLoaded", restoreOptions);
+var storageCache = {};
+chrome.storage.sync.get(null, function(data) {
+  storageCache = data;
+  //init(); // All your code is contained here, or executes later that this
+  restoreOptions(storageCache);
+});
+
+
 document.querySelector("form").addEventListener("submit", saveOptions);
 
 var keyForm = document.getElementById("key");
