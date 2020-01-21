@@ -5,14 +5,12 @@ let inputId = "awsc-services-search-autocomplete";
 var modifier = "meta";
 var userKey = 221; // "]"
 
-
 function searchMenuIsOpen() {
     if ( document.getElementById("servicesMenuContent").style.display === "block" ) {
         return true;
     } 
     return false;
 }
-
 
 function getModifierKeyPressed(e) {
     if ( e.metaKey === true ) {

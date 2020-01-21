@@ -5,28 +5,11 @@ let inputId = "awsc-services-search-autocomplete";
 var modifier = "meta";
 var userKey = 221; // "]"
 
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
-
 function searchMenuIsOpen() {
     if ( document.getElementById("servicesMenuContent").style.display === "block" ) {
         return true;
     } 
-
     return false;
-}
-
-function onGotModifier(item) {
-    if (item.modifier) {
-        modifier = item.modifier;
-    }
-}
-
-function  onGotKeyCode(item) {
-    if (item.keyCode) {
-        userKey = item.keyCode;
-    }
 }
 
 function getModifierKeyPressed(e) {
@@ -45,17 +28,25 @@ function getModifierKeyPressed(e) {
     return "";
 }
 
-document.onkeydown=function(e){
-    // Getting user definition for modifier
+function updateKeybind() {
     var gettingUserModifier = browser.storage.sync.get("modifier");
-    gettingUserModifier.then(onGotModifier, onError);
+    gettingUserModifier.then(function(data) {
+        if (data.modifier) {
+            modifier = data.modifier;
+        }
+    });
 
-    var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
-    gettingUserKeyCode.then( onGotKeyCode, onError);
+    var gettingUserKeyCode = browser.storage.sync.get("keyCode");
+    gettingUserKeyCode.then(function(data) {
+        if (data.keyCode) {
+            userKey = data.keyCode;
+        }
+    });
+}
 
-    // console.log("Currently set Modifier: " + modifier);
-    // console.log("Currently set key: " + userKey);
-    // console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
+
+document.onkeydown=function(e){
+    updateKeybind();
 
     if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
@@ -85,4 +76,8 @@ document.onkeyup=function(e){
 
         return false
     }
+}
+
+window.onload = function() {
+    this.updateKeybind();
 }
