@@ -10,7 +10,6 @@ function searchMenuIsOpen() {
     if ( document.getElementById("servicesMenuContent").style.display === "block" ) {
         return true;
     } 
-
     return false;
 }
 
@@ -31,27 +30,22 @@ function getModifierKeyPressed(e) {
     return "";
 }
 
-
-chrome.storage.local.get("modifier", function(data) {
-    console.log(data);
-    if (data.modifier) {
-        modifier = data.modifier;
-    }
-});
-
-chrome.storage.local.get("keyCode", function(data) {
-    console.log(data);
-    if (data.keyCode) {
-        userKey = data.keyCode;
-    }
-});
+function updateKeybind() {
+    chrome.storage.local.get("modifier", function(data) {
+        if (data.modifier) {
+            modifier = data.modifier;
+        }
+    });
+    
+    chrome.storage.local.get("keyCode", function(data) {
+        if (data.keyCode) {
+            userKey = data.keyCode;
+        }
+    });
+}
 
 document.onkeydown=function(e){
-
-
-    console.log("Currently set Modifier: " + modifier);
-    console.log("Currently set key: " + userKey);
-    console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
+    updateKeybind();
 
     if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
@@ -82,4 +76,8 @@ document.onkeyup=function(e){
 
         return false
     }
+}
+
+window.onload = function() {
+    this.updateKeybind();
 }
