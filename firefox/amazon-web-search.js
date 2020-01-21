@@ -48,7 +48,13 @@ function updateKeybind() {
 document.onkeydown=function(e){
     updateKeybind();
 
-    if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
+    //if ( (modifier === "none" && e.which == userKey) && (document.activeElement.nodeName !== 'INPUT' || document.activeElement.nodeName !== 'TEXTAREA') ) {
+    if ( (modifier === "none" && e.which == userKey) && !(document.activeElement.nodeName === 'INPUT' || document.activeElement.nodeName !== 'TEXTAREA') ) {
+        document.getElementById(servicesId).click()
+        document.getElementById(inputId).focus();
+
+        return false;
+    } else if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
         document.getElementById(servicesId).click()
         document.getElementById(inputId).focus();
