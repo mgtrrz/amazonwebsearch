@@ -5,28 +5,11 @@ let inputId = "awsc-services-search-autocomplete";
 var modifier = "meta";
 var userKey = 221; // "]"
 
-function onError(error) {
-    console.log(`Error: ${error}`);
-}
-
 function searchMenuIsOpen() {
     if ( document.getElementById("servicesMenuContent").style.display === "block" ) {
         return true;
     } 
-
     return false;
-}
-
-function onGotModifier(item) {
-    if (item.modifier) {
-        modifier = item.modifier;
-    }
-}
-
-function  onGotKeyCode(item) {
-    if (item.keyCode) {
-        userKey = item.keyCode;
-    }
 }
 
 function getModifierKeyPressed(e) {
@@ -45,17 +28,22 @@ function getModifierKeyPressed(e) {
     return "";
 }
 
+function updateKeybind() {
+    chrome.storage.local.get("modifier", function(data) {
+        if (data.modifier) {
+            modifier = data.modifier;
+        }
+    });
+    
+    chrome.storage.local.get("keyCode", function(data) {
+        if (data.keyCode) {
+            userKey = data.keyCode;
+        }
+    });
+}
+
 document.onkeydown=function(e){
-    // Getting user definition for modifier
-    var gettingUserModifier = browser.storage.sync.get("modifier");
-    gettingUserModifier.then(onGotModifier, onError);
-
-    var  gettingUserKeyCode = browser.storage.sync.get("keyCode");
-    gettingUserKeyCode.then( onGotKeyCode, onError);
-
-    // console.log("Currently set Modifier: " + modifier);
-    // console.log("Currently set key: " + userKey);
-    // console.log("Pressing: " + getModifierKeyPressed(e) + " + " + e.which);
+    updateKeybind();
 
     if ( getModifierKeyPressed(e) === modifier && e.which == userKey ) {
         // Simulate a click event to open the services menu
@@ -70,6 +58,7 @@ document.onkeydown=function(e){
     if ( e.shiftKey && e.which == 13 ) {
         var firstElement = document.getElementById("ui-id-1").childNodes[0].childNodes[0];
         var firstLink = firstElement.href;
+        console.log(firstLink)
         window.open(firstLink, '_blank');
         window.focus();
         // Prevent the Amazon script from loading the page within the same tab
@@ -85,4 +74,8 @@ document.onkeyup=function(e){
 
         return false
     }
+}
+
+window.onload = function() {
+    this.updateKeybind();
 }
